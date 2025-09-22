@@ -1,7 +1,7 @@
 {
   "name": "freisein-shop-frontend",
   "version": "1.0.0",
-  "description": "E-Commerce Shop ohne problematische Module",
+  "description": "Shopware E-Commerce Shop mit direkter API Integration",
   "private": true,
   "scripts": {
     "build": "nuxt build",
@@ -11,13 +11,17 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
+    "@nuxt/image": "1.11.0",
     "@types/node": "^20.8.0",
     "nuxt": "^3.8.0"
   },
   "dependencies": {
-    "@nuxtjs/tailwindcss": "^6.8.4",
     "@headlessui/vue": "^1.7.16",
     "@heroicons/vue": "^2.0.18",
-    "@vueuse/nuxt": "^10.5.0"
+    "@nuxtjs/tailwindcss": "^6.8.4",
+    "@pinia/nuxt": "^0.5.1",
+    "@vueuse/nuxt": "^10.5.0",
+    "pinia": "^2.1.7",
+    "uuid": "^9.0.1"
   }
 }
