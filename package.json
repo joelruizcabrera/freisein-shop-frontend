@@ -1,0 +1,27 @@
+{
+  "name": "freisein-shop-frontend",
+  "version": "1.0.0",
+  "description": "E-Commerce Shop mit Shopware Frontends",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.0",
+    "nuxt": "^3.8.0"
+  },
+  "dependencies": {
+    "@headlessui/vue": "^1.7.16",
+    "@heroicons/vue": "^2.0.18",
+    "@nuxtjs/tailwindcss": "^6.8.4",
+    "@pinia/nuxt": "^0.11.2",
+    "@shopware-pwa/composables-next": "^1.6.1",
+    "@shopware-pwa/nuxt3-module": "^1.2.0",
+    "@vueuse/nuxt": "^10.5.0",
+    "pinia": "^2.1.7"
+  }
+}
