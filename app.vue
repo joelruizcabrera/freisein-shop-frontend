@@ -10,11 +10,10 @@
 </template>
 
 <script setup>
-// Global SEO
 useHead({
-  titleTemplate: '%s - Shopware Store',
+  titleTemplate: '%s - Freisein Shop',
   meta: [
-    { name: 'description', content: 'Moderner E-Commerce Shop mit Shopware Frontends' }
+    { name: 'description', content: 'Moderner E-Commerce Shop' }
   ]
 })
 </script>

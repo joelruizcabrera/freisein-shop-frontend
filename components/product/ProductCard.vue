@@ -1,15 +1,15 @@
 <template>
   <div class="group relative">
-    <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
+    <div class="aspect-square w-full overflow-hidden rounded-lg bg-gray-200">
       <img
-          :src="product.cover?.url || '/placeholder-product.jpg'"
+          :src="product.image"
           :alt="product.name"
           class="h-full w-full object-cover object-center group-hover:opacity-75 transition-opacity duration-200"
       />
     </div>
 
     <div class="mt-4 flex items-center justify-between">
-      <div>
+      <div class="flex-1">
         <h3 class="text-sm text-gray-700">
           <NuxtLink :to="`/products/${product.id}`">
             <span aria-hidden="true" class="absolute inset-0" />
@@ -22,31 +22,24 @@
       </div>
       <div class="text-right">
         <p class="text-sm font-medium text-gray-900">
-          {{ formatPrice(product.calculatedPrice.unitPrice) }}
-        </p>
-        <p v-if="product.calculatedPrice.listPrice" class="text-sm text-gray-500 line-through">
-          {{ formatPrice(product.calculatedPrice.listPrice.price) }}
+          {{ formatPrice(product.price) }}
         </p>
       </div>
     </div>
 
-    <!-- Quick add to cart -->
     <div class="mt-4">
       <button
           @click.prevent="addToCart"
-          :disabled="addingToCart"
-          class="w-full bg-indigo-600 border border-transparent rounded-md py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 transition-colors duration-200"
+          :disabled="adding"
+          class="w-full bg-indigo-600 border border-transparent rounded-md py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
       >
-        <span v-if="!addingToCart">In den Warenkorb</span>
-        <span v-else>Hinzufügen...</span>
+        {{ adding ? 'Hinzufügen...' : 'In den Warenkorb' }}
       </button>
     </div>
   </div>
 </template>
 
 <script setup>
-import { useCart } from '@shopware-pwa/composables-next'
-
 const props = defineProps({
   product: {
     type: Object,
@@ -54,8 +47,7 @@ const props = defineProps({
   }
 })
 
-const { addProduct } = useCart()
-const addingToCart = ref(false)
+const adding = ref(false)
 
 const formatPrice = (price) => {
   return new Intl.NumberFormat('de-DE', {
@@ -65,16 +57,25 @@ const formatPrice = (price) => {
 }
 
 const addToCart = async () => {
-  addingToCart.value = true
+  adding.value = true
+
   try {
-    await addProduct({
-      id: props.product.id,
-      quantity: 1
+    await new Promise(resolve => setTimeout(resolve, 500))
+
+    // Emit event für Warenkorb-Update
+    const event = new CustomEvent('product-added', {
+      detail: { product: props.product }
     })
+    window.dispatchEvent(event)
+
+    // Success feedback
+    alert(`${props.product.name} wurde zum Warenkorb hinzugefügt!`)
+
   } catch (error) {
-    console.error('Fehler beim Hinzufügen zum Warenkorb:', error)
+    console.error('Fehler:', error)
+    alert('Fehler beim Hinzufügen zum Warenkorb')
   } finally {
-    addingToCart.value = false
+    adding.value = false
   }
 }
 </script>
